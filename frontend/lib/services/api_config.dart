@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:io' show Platform;
 
 class ApiConfig {
-  static const String defaultLocalHost = "127.0.0.1";
-  static const String defaultEmulatorHost = "10.0.2.2";
-  static const int defaultPort = 8000;
+static const String defaultLocalHost = "autonomous-content-to-action-agent.onrender.com";
+static const String defaultEmulatorHost = "autonomous-content-to-action-agent.onrender.com";
+static const int defaultPort = 443;
 
   // Allows manual override at runtime if testing physical devices
   static String? _customHost;
@@ -49,12 +49,18 @@ class ApiConfig {
   /// Combined Base HTTP URL
   static String get baseUrl {
     if (_customHost != null) return "http://$_customHost:$_customPort";
-    return "https://autonomous-content-to-action-agent.onrender.com";
+    final isSecure = host.endsWith("onrender.com") || port == 443;
+    final scheme = isSecure ? "https" : "http";
+    final portSuffix = (port == 443 || port == 80) ? "" : ":$port";
+    return "$scheme://$host$portSuffix";
   }
 
   /// Combined WebSocket Stream URL
   static String get websocketUrl {
     if (_customHost != null) return "ws://$_customHost:$_customPort/ws/logs";
-    return "wss://autonomous-content-to-action-agent.onrender.com/ws/logs";
+    final isSecure = host.endsWith("onrender.com") || port == 443;
+    final scheme = isSecure ? "wss" : "ws";
+    final portSuffix = (port == 443 || port == 80) ? "" : ":$port";
+    return "$scheme://$host$portSuffix/ws/logs";
   }
 }
