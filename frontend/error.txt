@@ -1,0 +1,27 @@
+Running Gradle task 'assembleDebug'...                          
+Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStoreType=WINDOWS-ROOT
+Could not initialize SSL context. Used properties: {java.home=D:\AndroidStudio\jbr, javax.net.ssl.keyStore=null, javax.net.ssl.keyStorePassword=null, javax.net.ssl.keyStoreProvider=null, javax.net.ssl.keyStoreType=null, javax.net.ssl.trustStore=null, javax.net.ssl.trustStorePassword=null, javax.net.ssl.trustStoreProvider=null, javax.net.ssl.trustStoreType=WINDOWS-ROOT, ssl.KeyManagerFactory.algorithm=null, ssl.TrustManagerFactory.algorithm=null}
+
+FAILURE: Build failed with an exception.
+
+* Where:
+Build file 'D:\flutter\packages\flutter_tools\gradle\build.gradle.kts' line: 7
+
+* What went wrong:
+Plugin [id: 'org.gradle.kotlin.kotlin-dsl', version: '5.2.0'] was not found in any of the following sources:
+
+- Gradle Core Plugins (plugin is not in 'org.gradle' namespace)
+- Included Builds (No included builds contain this plugin)
+- Plugin Repositories (could not resolve plugin artifact 'org.gradle.kotlin.kotlin-dsl:org.gradle.kotlin.kotlin-dsl.gradle.plugin:5.2.0')
+  Searched in the following repositories:
+    Gradle Central Plugin Repository
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 2s
+Running Gradle task 'assembleDebug'...                              3.3s
+Gradle task assembleDebug failed with exit code 1

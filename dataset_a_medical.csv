@@ -1,0 +1,5 @@
+product_id,product_name,quantity,reorder_level,supplier_id,sales_last_7_days,complaints,last_updated
+MED-101,Expiring Sterile Surgical Gloves,5,40,301,80,15,2026-05-18
+MED-102,Emergency Vaccine Vials,12,100,302,350,4,2026-05-18
+MED-103,Expiring Amoxicillin Batches,45,50,303,90,22,2026-05-18
+MED-104,ICU Syringe Pumps,8,15,301,35,1,2026-05-18

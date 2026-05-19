@@ -1,0 +1,5 @@
+item_code,item_name,units,min_stock,supplier,weekly_sales,issues,date
+ELEC-201,Overstock Semiconductor Chips,1200,200,401,40,0,2026-05-18
+ELEC-202,Premium OLED Displays,450,100,402,12,1,2026-05-18
+ELEC-203,Smart Sensor Modules,650,150,403,25,0,2026-05-18
+ELEC-204,High-End GPU Accelerators,800,100,404,8,2,2026-05-18

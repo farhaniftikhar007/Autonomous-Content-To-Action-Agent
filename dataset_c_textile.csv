@@ -1,0 +1,5 @@
+product_code,title,stock,reorder_point,supplier_code,sales,issues,updated_at
+TEX-301,Raw Cotton Yarn,30,200,501,150,10,2026-05-18
+TEX-302,Premium Denim Fabric,85,300,502,220,5,2026-05-18
+TEX-303,Industrial Loom Belts,15,50,503,30,3,2026-05-18
+TEX-304,Seasonal Linen Blend,60,250,504,180,0,2026-05-18

@@ -1,0 +1,11 @@
+product_id,product_name,warehouse_location,supplier_name,quantity,reorder_level,unit_cost,shipment_status,last_updated,remarks
+PK-1001,Surgical Gloves,Karachi Port,Alpha Medical Supplies,120,300,4.50,Delayed,2026-05-17 10:30:00,Low stock due to port strike
+PK-1002,Diesel Generator,Lahore Distribution Center,PowerTech Pakistan,15,5,8500.00,In Transit,2026-05-17 09:15:00,Stable inventory
+PK-1003,Cotton Fabric Rolls,Faisalabad Textile Hub,Faisal Textiles Ltd,2500,1000,18.75,Delivered,2026-05-17 08:45:00,Overstock detected
+PK-1004,Pharmaceutical Syringes,Islamabad Warehouse,HealthLine Pharma,0,200,1.20,Shipment Delayed,2026-05-17 11:20:00,Critical shortage
+PK-1005,Industrial Lubricant,Karachi Port,PetroChem Asia,85,150,55.00,Customs Hold,2026-05-17 07:50:00,Customs clearance issue
+PK-1006,Electronic Sensors,Lahore Distribution Center,Nexa Electronics,410,100,125.00,Delivered,2026-05-17 06:40:00,Contradictory count reported
+PK-1007,Cold Storage Vaccine Packs,Islamabad Warehouse,MedCore International,60,180,240.00,Delayed,2026-05-17 10:05:00,Medical emergency inventory
+PK-1008,Textile Dyes,Faisalabad Textile Hub,ColorMax Industries,900,400,32.00,In Transit,2026-05-17 09:55:00,Supplier pricing conflict
+PK-1009,Packaging Material,Karachi Port,SafePack Solutions,1700,500,2.15,Delivered,2026-05-17 08:25:00,Normal operations
+PK-1010,Server Rack Units,Lahore Distribution Center,IT Infra Global,9,20,1200.00,Delayed,2026-05-17 11:40:00,Warehouse outage impact

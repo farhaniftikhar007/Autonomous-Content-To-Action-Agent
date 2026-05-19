@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+google-generativeai
+python-dotenv
+PyPDF2
+pandas
+beautifulsoup4
+requests
+python-multipart
+websockets

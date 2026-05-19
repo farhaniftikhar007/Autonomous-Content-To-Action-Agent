@@ -1,0 +1,11 @@
+sku,name,quantity,reorder_level,supplier_id,sales_last_7_days,complaints,last_updated
+SKU-001,Wireless Mouse,12,20,101,45,2,2026-05-16
+SKU-002,Mechanical Keyboard,5,15,102,60,8,2026-05-16
+SKU-003,Gaming Headset,30,10,103,25,1,2026-05-15
+SKU-004,USB-C Cable,3,25,101,80,15,2026-05-16
+SKU-005,Laptop Stand,18,12,104,20,0,2026-05-14
+SKU-006,Monitor 24 Inch,2,8,105,40,12,2026-05-16
+SKU-007,External SSD 1TB,25,10,106,35,1,2026-05-13
+SKU-008,Webcam HD,7,18,102,55,10,2026-05-16
+SKU-009,Bluetooth Speaker,50,15,107,10,0,2026-05-12
+SKU-010,Office Chair,1,5,108,22,6,2026-05-16

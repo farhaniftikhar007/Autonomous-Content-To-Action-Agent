@@ -1,0 +1,42 @@
+[
+  {
+    "event_id": "EVT-001",
+    "timestamp": "2026-05-17T10:45:00",
+    "severity": "critical",
+    "location": "Karachi Port",
+    "event": "Port workers strike blocking medical supply containers",
+    "impact": "Shipment delays exceeding 48 hours"
+  },
+  {
+    "event_id": "EVT-002",
+    "timestamp": "2026-05-17T11:00:00",
+    "severity": "high",
+    "location": "Punjab Region",
+    "event": "Fuel shortage disrupting freight operations",
+    "impact": "Transportation costs increased by 22%"
+  },
+  {
+    "event_id": "EVT-003",
+    "timestamp": "2026-05-17T11:10:00",
+    "severity": "medium",
+    "location": "Lahore Distribution Center",
+    "event": "Warehouse management system outage",
+    "impact": "Inventory sync temporarily unavailable"
+  },
+  {
+    "event_id": "EVT-004",
+    "timestamp": "2026-05-17T11:22:00",
+    "severity": "critical",
+    "location": "Islamabad Warehouse",
+    "event": "Supplier Alpha contract cancellation",
+    "impact": "Future replenishment risk for vaccine inventory"
+  },
+  {
+    "event_id": "EVT-005",
+    "timestamp": "2026-05-17T11:35:00",
+    "severity": "high",
+    "location": "National Distribution",
+    "event": "Demand spike for Product-X",
+    "impact": "Demand increased by 300% within 12 hours"
+  }
+]

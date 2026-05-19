@@ -1,0 +1,27 @@
+1. Upload enterprise_inventory.csv using CSV Ingestion
+2. Verify rows appear in dashboard inventory metrics
+3. Upload logistics_incident_report.pdf using PDF Ingestion
+4. Verify alerts generated from extracted text
+5. Use URL Scraper Intel:
+   - https://www.reuters.com
+   - https://www.bbc.com/news
+   - https://www.aljazeera.com
+
+6. Broadcast live events from live_feed_events.json
+7. Open Execution Trace panel
+8. Verify:
+   - websocket logs
+   - ingestion logs
+   - analytics recalculation
+   - contradiction detection
+   - AI reasoning updates
+
+AI TEST PROMPTS:
+1.
+Karachi port shutdown is delaying critical inventory replenishment for high-demand medical supplies. Analyze operational risks and recommend mitigation.
+
+2.
+Supplier Alpha reports shipment dispatched, but warehouse intake remains zero for 48 hours. Investigate contradiction severity.
+
+3.
+Demand for Product-X increased 300% during fuel shortage disruptions. Recommend inventory stabilization strategy under budget constraints.
