@@ -555,5 +555,5 @@ The following screenshots capture the high-fidelity cyber-ops dark theme interfa
 *Figure 6: Multi-source ingestion control panel for CSV files, logistics blogs, and supplier email feeds.*
 
 ## Operations Assistant (Agent View)
-*(Interface available in live application)*
+![Operations Assistant (Agent View)](screenshots/agent_view.jpg)
 *Figure 7: Dynamic agent chat interface driving automated reasoning and action-chain orchestration.*
