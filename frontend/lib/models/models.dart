@@ -21,14 +21,14 @@ class InventoryItem {
 
   factory InventoryItem.fromJson(Map<String, dynamic> json) {
     return InventoryItem(
-      id: json['id'],
-      sku: json['sku'] ?? '',
-      name: json['name'] ?? '',
-      quantity: json['quantity'] ?? 0,
-      reorderLevel: json['reorder_level'] ?? 0,
-      salesLast7Days: json['sales_last_7_days'] ?? 0,
-      complaints: json['complaints'] ?? 0,
-      lastUpdated: json['last_updated'] ?? '',
+      id: (json['id'] as num?)?.toInt() ?? 0,
+      sku: json['sku']?.toString() ?? '',
+      name: json['name']?.toString() ?? '',
+      quantity: (json['quantity'] as num?)?.toInt() ?? 0,
+      reorderLevel: (json['reorder_level'] as num?)?.toInt() ?? 0,
+      salesLast7Days: (json['sales_last_7_days'] as num?)?.toInt() ?? 0,
+      complaints: (json['complaints'] as num?)?.toInt() ?? 0,
+      lastUpdated: json['last_updated']?.toString() ?? '',
     );
   }
 }
@@ -44,11 +44,13 @@ class Alert {
 
   factory Alert.fromJson(Map<String, dynamic> json) {
     return Alert(
-      id: json['id'],
-      title: json['title'],
-      message: json['message'],
-      isResolved: json['is_resolved'],
-      createdAt: DateTime.parse(json['created_at']),
+      id: (json['id'] as num?)?.toInt() ?? 0,
+      title: json['title']?.toString() ?? '',
+      message: json['message']?.toString() ?? '',
+      isResolved: json['is_resolved'] == true,
+      createdAt: json['created_at'] != null 
+          ? DateTime.tryParse(json['created_at'].toString()) ?? DateTime.now()
+          : DateTime.now(),
     );
   }
 }
@@ -63,10 +65,12 @@ class ActionLog {
 
   factory ActionLog.fromJson(Map<String, dynamic> json) {
     return ActionLog(
-      id: json['id'],
-      actionType: json['action_type'],
-      description: json['description'],
-      timestamp: DateTime.parse(json['timestamp']),
+      id: (json['id'] as num?)?.toInt() ?? 0,
+      actionType: json['action_type']?.toString() ?? '',
+      description: json['description']?.toString() ?? '',
+      timestamp: json['timestamp'] != null 
+          ? DateTime.tryParse(json['timestamp'].toString()) ?? DateTime.now()
+          : DateTime.now(),
     );
   }
 }
@@ -104,18 +108,20 @@ class SimulationResult {
 
   factory SimulationResult.fromJson(Map<String, dynamic> json) {
     return SimulationResult(
-      proposedAction: json['proposed_action'] ?? '',
-      predictedOutcome: json['predicted_outcome'] ?? '',
-      riskLevel: json['risk_level'] ?? '',
-      reasoningLog: json['reasoning_log'] != null ? List<String>.from(json['reasoning_log']) : [],
-      confidenceScore: (json['confidence_score'] ?? 0.90).toDouble(),
-      recommendations: json['recommendations'] ?? '',
-      decisionExplanations: json['decision_explanations'] ?? '',
-      estimatedLatencyMs: json['estimated_latency_ms'] ?? 150,
-      estimatedCostPkr: (json['estimated_cost_pkr'] ?? 25000.0).toDouble(),
-      projectedRiskReduction: (json['projected_risk_reduction'] ?? 85.0).toDouble(),
-      beforeState: json['before_state'] ?? 'Vulnerable',
-      afterState: json['after_state'] ?? 'Secure',
+      proposedAction: json['proposed_action']?.toString() ?? '',
+      predictedOutcome: json['predicted_outcome']?.toString() ?? '',
+      riskLevel: json['risk_level']?.toString() ?? '',
+      reasoningLog: json['reasoning_log'] != null 
+          ? (json['reasoning_log'] as List).map((e) => e?.toString() ?? '').toList()
+          : [],
+      confidenceScore: (json['confidence_score'] as num?)?.toDouble() ?? 0.90,
+      recommendations: json['recommendations']?.toString() ?? '',
+      decisionExplanations: json['decision_explanations']?.toString() ?? '',
+      estimatedLatencyMs: (json['estimated_latency_ms'] as num?)?.toInt() ?? 150,
+      estimatedCostPkr: (json['estimated_cost_pkr'] as num?)?.toDouble() ?? 25000.0,
+      projectedRiskReduction: (json['projected_risk_reduction'] as num?)?.toDouble() ?? 85.0,
+      beforeState: json['before_state']?.toString() ?? 'Vulnerable',
+      afterState: json['after_state']?.toString() ?? 'Secure',
     );
   }
 }
@@ -143,14 +149,16 @@ class OperationalAnalytic {
 
   factory OperationalAnalytic.fromJson(Map<String, dynamic> json) {
     return OperationalAnalytic(
-      id: json['id'],
-      actionChainId: json['action_chain_id'] ?? 0,
-      beforeState: json['before_state'] ?? '',
-      afterState: json['after_state'] ?? '',
-      latencyMs: json['latency_ms'] ?? 0,
-      operationalCost: (json['operational_cost'] ?? 0).toDouble(),
-      riskReductionScore: (json['risk_reduction_score'] ?? 0).toDouble(),
-      timestamp: DateTime.parse(json['timestamp']),
+      id: (json['id'] as num?)?.toInt() ?? 0,
+      actionChainId: (json['action_chain_id'] as num?)?.toInt() ?? 0,
+      beforeState: json['before_state']?.toString() ?? '',
+      afterState: json['after_state']?.toString() ?? '',
+      latencyMs: (json['latency_ms'] as num?)?.toInt() ?? 0,
+      operationalCost: (json['operational_cost'] as num?)?.toDouble() ?? 0.0,
+      riskReductionScore: (json['risk_reduction_score'] as num?)?.toDouble() ?? 0.0,
+      timestamp: json['timestamp'] != null 
+          ? DateTime.tryParse(json['timestamp'].toString()) ?? DateTime.now()
+          : DateTime.now(),
     );
   }
 }
@@ -175,26 +183,26 @@ class ProjectedImpact {
   factory ProjectedImpact.fromJson(Map<String, dynamic> json) {
     if (json['status'] == 'actual') {
       return ProjectedImpact(
-        status: json['status'],
-        estimatedLatencyMs: json['latency_ms'] ?? 0,
-        estimatedCost: (json['operational_cost'] ?? 0).toDouble(),
-        projectedRiskReduction: (json['risk_reduction'] ?? 0).toDouble(),
-        beforeState: json['before_state'] ?? '',
-        projectedAfterState: json['after_state'] ?? '',
+        status: json['status']?.toString() ?? 'actual',
+        estimatedLatencyMs: (json['latency_ms'] as num?)?.toInt() ?? 0,
+        estimatedCost: (json['operational_cost'] as num?)?.toDouble() ?? 0.0,
+        projectedRiskReduction: (json['risk_reduction'] as num?)?.toDouble() ?? 0.0,
+        beforeState: json['before_state']?.toString() ?? '',
+        projectedAfterState: json['after_state']?.toString() ?? '',
       );
     }
     return ProjectedImpact(
-      status: json['status'] ?? 'projected',
-      estimatedLatencyMs: json['estimated_latency_ms'] ?? 0,
-      estimatedCost: (json['estimated_cost'] ?? 0).toDouble(),
-      projectedRiskReduction: (json['projected_risk_reduction'] ?? 0).toDouble(),
-      beforeState: json['before_state'] ?? '',
+      status: json['status']?.toString() ?? 'projected',
+      estimatedLatencyMs: (json['estimated_latency_ms'] as num?)?.toInt() ?? 0,
+      estimatedCost: (json['estimated_cost'] as num?)?.toDouble() ?? 0.0,
+      projectedRiskReduction: (json['projected_risk_reduction'] as num?)?.toDouble() ?? 0.0,
+      beforeState: json['before_state']?.toString() ?? '',
       projectedAfterState: json['projected_after_state'] ?? '',
     );
   }
 }
 
-enum ActionStatus { pending, executing, retrying, recovered, completed, failed }
+enum ActionStatus { pending, executing, retrying, recovered, completed, failed, rollback }
 
 class ActionStep {
   final String title;
@@ -218,13 +226,13 @@ class ExecutionLog {
   });
 
   factory ExecutionLog.fromJson(Map<String, dynamic> json) {
-    final rawType = json['level'] ?? json['type'] ?? 'info';
+    final rawType = (json['level'] ?? json['type'] ?? 'info').toString();
     final parsedType = rawType == 'warning' ? 'retry' : rawType;
     return ExecutionLog(
-      timestamp: json['timestamp'] ?? '',
+      timestamp: (json['timestamp'] ?? '').toString(),
       type: parsedType,
-      message: json['message'] ?? '',
-      source: json['source'],
+      message: (json['message'] ?? '').toString(),
+      source: json['source']?.toString(),
     );
   }
 }

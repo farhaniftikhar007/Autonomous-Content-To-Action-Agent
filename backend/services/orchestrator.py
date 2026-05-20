@@ -22,7 +22,36 @@ class AgentOrchestrator:
         log_event("Invoking Operations Assistant to analyze multi-source logs and compute risk variables...", level="info", source="system")
         
         # 2. Use Operations Assistant to analyze context and plan tasks
-        plan_details = self.agent.analyze_and_plan(self.db, context_data)
+        import asyncio
+        import threading
+        try:
+            loop = asyncio.get_event_loop()
+        except RuntimeError:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            
+        if loop.is_running():
+            class AsyncRunner(threading.Thread):
+                def __init__(self, agent, db, ctx):
+                    super().__init__()
+                    self.agent = agent
+                    self.db = db
+                    self.ctx = ctx
+                    self.result = None
+                    self.exc = None
+                def run(self):
+                    try:
+                        self.result = asyncio.run(self.agent.analyze_and_plan(self.db, self.ctx))
+                    except Exception as e:
+                        self.exc = e
+            runner = AsyncRunner(self.agent, self.db, context_data)
+            runner.start()
+            runner.join()
+            if runner.exc:
+                raise runner.exc
+            plan_details = runner.result
+        else:
+            plan_details = loop.run_until_complete(self.agent.analyze_and_plan(self.db, context_data))
         
         # 3. Create Tasks for the Workflow and pre-seed the AI-planned action chains
         tasks_list = plan_details.get("tasks", [])
@@ -52,12 +81,20 @@ class AgentOrchestrator:
         # 1. Get pending tasks
         tasks = self.planner.get_pending_tasks(workflow_id)
         
+        from execution.engine import ActionExecutionEngine
+        from recovery.handler import RecoveryManager
+        
+        engine = ActionExecutionEngine(self.db)
+        recovery_mgr = RecoveryManager(self.db)
+        
+        workflow_failed = False
+        
         for task in tasks:
             # 2. Update task state
             self.planner.update_task_status(task.id, "running")
             log_event(f"Task #{task.id} active. Status: running. Description: '{task.description}'", level="info", source="system")
             
-            # 3. Get or generate Action Chain using Analysis Engine
+            # 3. Get or generate Action Chain
             ac = self.db.query(models.ActionChain).filter(models.ActionChain.task_id == task.id).first()
             if not ac:
                 log_event(f"Generating optimized AI action chain steps for task #{task.id}...", level="info", source="system")
@@ -74,12 +111,35 @@ class AgentOrchestrator:
                 self.db.commit()
                 log_event(f"Loaded pre-planned AI action chain steps for task #{task.id}.", level="info", source="system")
             
-            # 4. Mark as completed
-            ac.execution_status = "completed"
-            self.planner.update_task_status(task.id, "completed")
-            self.db.commit()
-            log_event(f"Task #{task.id} successfully executed. Committing local DB transactions.", level="success", source="system")
+            # 4. Execute the Action Chain via ActionExecutionEngine
+            result = engine.execute_chain(ac.id, workflow_name=task.workflow.name)
+            
+            if result["status"] == "failed":
+                workflow_failed = True
+                log_event(f"Action Chain #{ac.id} failed during execution. Triggering recovery manager...", level="warning", source="system")
+                
+                # Attempt recovery/retry/rollback
+                recovery_res = recovery_mgr.attempt_recovery(action_id=ac.id, error_message=result.get("error", "Unknown execution error"))
+                
+                if recovery_res["status"] in ["recovered", "fallback_success"]:
+                    ac.execution_status = "completed"
+                    self.planner.update_task_status(task.id, "completed")
+                    self.db.commit()
+                    log_event(f"Task #{task.id} successfully recovered and executed.", level="success", source="system")
+                else:
+                    # Recovery failed completely, status is rolled_back
+                    ac.execution_status = "failed"
+                    self.planner.update_task_status(task.id, "failed")
+                    self.db.commit()
+                    log_event(f"Task #{task.id} execution failed permanently. Rollback operations executed.", level="error", source="system")
+                    break
+            else:
+                ac.execution_status = "completed"
+                self.planner.update_task_status(task.id, "completed")
+                self.db.commit()
+                log_event(f"Task #{task.id} successfully executed. Committing local DB transactions.", level="success", source="system")
 
         # Update overall workflow status
-        self.planner.update_workflow_status(workflow_id, "completed")
-        log_event(f"All workflow #{workflow_id} tasks finished. Setting overall status to 'completed'. Workflow closed successfully.", level="success", source="system")
+        final_wf_status = "failed" if workflow_failed else "completed"
+        self.planner.update_workflow_status(workflow_id, final_wf_status)
+        log_event(f"All workflow #{workflow_id} tasks finished. Setting overall status to '{final_wf_status}'. Workflow closed.", level="success", source="system")

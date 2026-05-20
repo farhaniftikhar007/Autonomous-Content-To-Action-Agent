@@ -358,26 +358,32 @@ class InsightsScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.psychology,
-                    color: isCritical ? Colors.redAccent : Colors.cyanAccent,
-                    size: 24,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    isCritical ? "CRITICAL RESOLUTION PLAN" : "OPERATIONAL ANALYSIS",
-                    style: TextStyle(
-                      fontFamily: 'Courier',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                      letterSpacing: 1.0,
+              Expanded(
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.psychology,
                       color: isCritical ? Colors.redAccent : Colors.cyanAccent,
+                      size: 24,
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        isCritical ? "CRITICAL RESOLUTION PLAN" : "OPERATIONAL ANALYSIS",
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontFamily: 'Courier',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 11,
+                          letterSpacing: 1.0,
+                          color: isCritical ? Colors.redAccent : Colors.cyanAccent,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
+              const SizedBox(width: 8),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(

@@ -67,6 +67,7 @@ class ActionTimeline extends StatelessWidget {
       case ActionStatus.retrying: return Colors.orangeAccent;
       case ActionStatus.recovered: return Colors.blueAccent;
       case ActionStatus.failed: return Colors.redAccent;
+      case ActionStatus.rollback: return Colors.deepOrangeAccent;
       case ActionStatus.pending: return Colors.white24;
     }
   }
@@ -74,6 +75,7 @@ class ActionTimeline extends StatelessWidget {
   Widget? _getStatusIcon(ActionStatus status) {
     if (status == ActionStatus.completed) return const Icon(Icons.check, size: 12, color: Colors.black);
     if (status == ActionStatus.executing) return const SizedBox(width: 8, height: 8, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.black));
+    if (status == ActionStatus.rollback) return const Icon(Icons.history, size: 12, color: Colors.black);
     return null;
   }
 }

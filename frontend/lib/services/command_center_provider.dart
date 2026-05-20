@@ -166,6 +166,139 @@ class CommandCenterProvider extends ChangeNotifier {
       _actionLogs = results[3] as List<ActionLog>;
       _chartsData = results[4] as Map<String, List<double>>;
 
+      // If database is empty, seed realistic mock demo states to keep the grid alive and functional
+      if (_inventory.isEmpty) {
+        _inventory = [
+          InventoryItem(
+            id: 1,
+            sku: "MED-GLOVE-981",
+            name: "Surgical Sterile Gloves",
+            quantity: 4,
+            reorderLevel: 25,
+            salesLast7Days: 45,
+            complaints: 4,
+            lastUpdated: DateTime.now().toIso8601String(),
+          ),
+          InventoryItem(
+            id: 2,
+            sku: "ELE-CHIP-702",
+            name: "Microcontroller STM32",
+            quantity: 18,
+            reorderLevel: 50,
+            salesLast7Days: 120,
+            complaints: 1,
+            lastUpdated: DateTime.now().toIso8601String(),
+          ),
+          InventoryItem(
+            id: 3,
+            sku: "TEX-FIB-404",
+            name: "Premium Nylon Fiber",
+            quantity: 410,
+            reorderLevel: 300,
+            salesLast7Days: 95,
+            complaints: 0,
+            lastUpdated: DateTime.now().toIso8601String(),
+          ),
+          InventoryItem(
+            id: 4,
+            sku: "MED-SYR-102",
+            name: "Disposable Syringes 5ml",
+            quantity: 2,
+            reorderLevel: 100,
+            salesLast7Days: 180,
+            complaints: 6,
+            lastUpdated: DateTime.now().toIso8601String(),
+          ),
+        ];
+      }
+
+      if (_alerts.isEmpty) {
+        _alerts = [
+          Alert(
+            id: 1,
+            title: "[CRITICAL] Inventory Depleted: MED-SYR-102",
+            message: "Stock level is at 2 units (Reorder limit: 100).",
+            isResolved: false,
+            createdAt: DateTime.now().subtract(const Duration(minutes: 42)),
+          ),
+          Alert(
+            id: 2,
+            title: "[WARNING] Supply Risk: Supplier 4 Delay",
+            message: "Supplier 4 reliability score dropped to 72%. Estimated delay is 3.5 days.",
+            isResolved: false,
+            createdAt: DateTime.now().subtract(const Duration(hours: 2)),
+          ),
+          Alert(
+            id: 3,
+            title: "[ALERT] Ingestion Contradiction on ELE-CHIP-702",
+            message: "Conflict: Physical CSV indicates 18 units, while news feed indicates cargo loss.",
+            isResolved: false,
+            createdAt: DateTime.now().subtract(const Duration(hours: 5)),
+          ),
+        ];
+      }
+
+      if (_actionLogs.isEmpty) {
+        _actionLogs = [
+          ActionLog(
+            id: 1,
+            actionType: "understand",
+            description: "Parsed query: 'Analyze medical stock shortage & draft purchase order.'",
+            timestamp: DateTime.now().subtract(const Duration(seconds: 40)),
+          ),
+          ActionLog(
+            id: 2,
+            actionType: "conflict",
+            description: "Cross-referenced sources: Found 1 core conflict on SKU ELE-CHIP-702.",
+            timestamp: DateTime.now().subtract(const Duration(seconds: 35)),
+          ),
+          ActionLog(
+            id: 3,
+            actionType: "reasoning",
+            description: "Gemini swarm resolved reorder plan: Split PO for MED-SYR-102 to alternative supplier.",
+            timestamp: DateTime.now().subtract(const Duration(seconds: 30)),
+          ),
+          ActionLog(
+            id: 4,
+            actionType: "decision",
+            description: "Drafted split purchase orders: PO-901A (PKR 48,000) & PO-901B (PKR 22,000) generated.",
+            timestamp: DateTime.now().subtract(const Duration(seconds: 25)),
+          ),
+          ActionLog(
+            id: 5,
+            actionType: "outcome",
+            description: "Dispatched operational sequence. Monitored task execution running...",
+            timestamp: DateTime.now().subtract(const Duration(seconds: 20)),
+          ),
+        ];
+      }
+
+      if (_chartsData.isEmpty) {
+        _chartsData = {
+          "mitigation_impact": [20.0, 45.0, 75.0, 92.0],
+          "inventory_trends": [88.0, 82.0, 71.0, 68.0],
+          "shortage_growth": [1.0, 2.0, 3.0, 3.0],
+          "reorder_forecasts": [12.0, 24.0, 35.0, 48.0],
+          "supplier_delays": [1.2, 1.8, 2.7, 3.5],
+          "risk_escalation": [2.1, 3.5, 5.8, 6.8],
+        };
+      }
+
+      if (_analytics.isEmpty) {
+        _analytics = [
+          OperationalAnalytic(
+            id: 1,
+            actionChainId: 1,
+            beforeState: "Active shortages and delays present",
+            afterState: "Actions dispatched: Stock replenishment ordered",
+            latencyMs: 820,
+            operationalCost: 70000.0,
+            riskReductionScore: 84.5,
+            timestamp: DateTime.now().subtract(const Duration(minutes: 5)),
+          ),
+        ];
+      }
+
       // Dynamically load the projected impact of the latest action chain
       final latestChainId = _analytics.isNotEmpty ? _analytics.first.actionChainId : 1;
       _projectedImpact = await _repository.getProjectedImpact(latestChainId).timeout(const Duration(seconds: 5));

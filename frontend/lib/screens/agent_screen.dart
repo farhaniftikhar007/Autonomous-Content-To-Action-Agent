@@ -352,34 +352,7 @@ class _AgentScreenState extends State<AgentScreen> {
                           const SizedBox(height: 12),
                           Divider(color: Colors.greenAccent.withOpacity(0.8), thickness: 1.5),
                           const SizedBox(height: 12),
-                          ..._result!.reasoningLog.map((log) => Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      "> ",
-                                      style: TextStyle(
-                                        color: Colors.greenAccent,
-                                        fontFamily: 'Courier',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        log,
-                                        style: const TextStyle(
-                                          color: Colors.greenAccent,
-                                          fontFamily: 'Courier',
-                                          fontSize: 14,
-                                          height: 1.5,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )),
+                          ..._result!.reasoningLog.map((log) => _buildReasoningLogItem(log)),
                         ],
                       ),
                     ),
@@ -553,6 +526,118 @@ class _AgentScreenState extends State<AgentScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildReasoningLogItem(String logLine) {
+    final badgeRegExp = RegExp(r'^\[([A-Z0-9\s_\-\/]+)\]');
+    final match = badgeRegExp.firstMatch(logLine);
+    
+    if (match != null) {
+      final badgeName = match.group(1)!;
+      final remainingText = logLine.replaceFirst(badgeRegExp, '').trim();
+      
+      Color badgeColor;
+      Color badgeBg;
+      switch (badgeName.toUpperCase()) {
+        case 'UNDERSTAND':
+          badgeColor = Colors.blueAccent;
+          badgeBg = Colors.blue.withOpacity(0.15);
+          break;
+        case 'CONTEXT':
+          badgeColor = Colors.tealAccent;
+          badgeBg = Colors.teal.withOpacity(0.15);
+          break;
+        case 'CONFLICT':
+          badgeColor = Colors.orangeAccent;
+          badgeBg = Colors.orange.withOpacity(0.15);
+          break;
+        case 'REASONING':
+          badgeColor = Colors.purpleAccent;
+          badgeBg = Colors.purple.withOpacity(0.15);
+          break;
+        case 'DECISION':
+          badgeColor = Colors.cyanAccent;
+          badgeBg = Colors.cyan.withOpacity(0.15);
+          break;
+        case 'OUTCOME':
+          badgeColor = Colors.greenAccent;
+          badgeBg = Colors.green.withOpacity(0.15);
+          break;
+        case 'RECOVERY':
+          badgeColor = Colors.amberAccent;
+          badgeBg = Colors.amber.withOpacity(0.15);
+          break;
+        case 'ROLLBACK':
+          badgeColor = Colors.redAccent;
+          badgeBg = Colors.red.withOpacity(0.15);
+          break;
+        case 'EXECUTION':
+          badgeColor = Colors.lightBlueAccent;
+          badgeBg = Colors.blue.withOpacity(0.12);
+          break;
+        case 'ERROR':
+          badgeColor = Colors.redAccent;
+          badgeBg = Colors.red.withOpacity(0.2);
+          break;
+        default:
+          badgeColor = Colors.greenAccent;
+          badgeBg = Colors.greenAccent.withOpacity(0.1);
+      }
+      
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              margin: const EdgeInsets.only(right: 8),
+              decoration: BoxDecoration(
+                color: badgeBg,
+                border: Border.all(color: badgeColor.withOpacity(0.5), width: 1),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Text(
+                badgeName,
+                style: TextStyle(
+                  color: badgeColor,
+                  fontFamily: 'Courier',
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                remainingText,
+                style: const TextStyle(
+                  color: Colors.greenAccent,
+                  fontFamily: 'Courier',
+                  fontSize: 13,
+                  height: 1.4,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+    
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text("> ", style: TextStyle(color: Colors.greenAccent, fontFamily: 'Courier', fontSize: 13, fontWeight: FontWeight.bold)),
+          Expanded(
+            child: Text(
+              logLine,
+              style: const TextStyle(color: Colors.greenAccent, fontFamily: 'Courier', fontSize: 13, height: 1.4),
+            ),
+          ),
+        ],
       ),
     );
   }
