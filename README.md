@@ -530,26 +530,30 @@ These protections ensure graceful degradation and operational continuity even un
 
 The following screenshots capture the high-fidelity cyber-ops dark theme interface of the **AI OPS COMMAND CENTER** mobile application running on Android:
 
-## Dashboard Screen
-![Dashboard Screen](screenshots/dashboard.png)
-*Figure 1: The central command cockpit showing AI status indicators, active threat alerts, real-time log counters, and the weekly inventory health cost-metric trend chart.*
+## Dashboard Overview
+![Dashboard Overview](screenshots/dashboard_overview.jpg)
+*Figure 1: The primary operations dashboard showing Active Threats, Reorder Shortages, Inventory Health ratio (25.0%), Supply Risk Index (6.90), and real-time Mitigation Impact charts.*
 
-## Multi-Source Ingestion Screen
-![Multi-Source Ingestion Screen](screenshots/ingestion.png)
-*Figure 2: Ingest pipelines showing active data feeds (warehouse CSVs, logistics blogs, and supplier email news) with automated data freshness indicators.*
+## Threat Monitor
+![Threat Monitor](screenshots/threat_monitor.jpg)
+*Figure 2: The dedicated Operational Threat Monitor screen tracking live alerts and resolved anomaly nodes.*
 
-## Contradiction Detection Panel
-![Contradiction Detection Panel](screenshots/contradictions.png)
-*Figure 3: Interactive discrepancy logging highlighting logical conflicts between static local databases and real-time external supplier updates.*
+## Recent Execution Logs
+![Recent Execution Logs](screenshots/recent_logs.jpg)
+*Figure 3: Detailed telemetry stream showcasing step-by-step agent workflow execution (UNDERSTAND, CONFLICT, REASONING, DECISION) with runtime metrics (120ms latency, +98.0% risk reduction).*
 
-## Action Chain Execution Timeline
-![Action Chain Execution Timeline](screenshots/timeline.png)
-*Figure 4: Automated 5-stage action plan timeline detailing step throttling limits and execution statuses (pending, executing, success, failed, and rollback).*
+## Operational Analysis
+![Operational Analysis](screenshots/operational_analysis.jpg)
+*Figure 4: The active execution chain timeline mapping state changes from vulnerable to resolving and corresponding projected costs.*
 
-## Recovery & Rollback Logs
-![Recovery & Rollback Logs](screenshots/rollback_logs.png)
-*Figure 5: High-priority WebSocket telemetry output tracing connection logs, retry attempt loops, and database rollback operations.*
+## Navigation Drawer
+![Navigation Drawer](screenshots/navigation_drawer.jpg)
+*Figure 5: Global navigation drawer providing rapid routing to Dashboard, Legacy Inventory, AI Insights, Live Trace, and Settings.*
 
-## Final Outcome Metrics
-![Final Outcome Metrics](screenshots/outcome_metrics.png)
-*Figure 6: Post-mitigation analytics comparison outlining database status changes, latency execution meters, and total risk-reduction scores.*
+## Ingestion Gateway
+*(Interface available in live application)*
+*Figure 6: Multi-source ingestion control panel for CSV files, logistics blogs, and supplier email feeds.*
+
+## Operations Assistant (Agent View)
+*(Interface available in live application)*
+*Figure 7: Dynamic agent chat interface driving automated reasoning and action-chain orchestration.*
